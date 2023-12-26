@@ -8,14 +8,13 @@ const controls = document.querySelector(".controls");
 const cameraOptions = document.querySelector(".video-options>select");
 const video = document.querySelector("video");
 const canvas = document.querySelector("canvas");
-const screenshotImage = document.querySelector("img");
 const buttons = [...controls.querySelectorAll("button")];
 const textArea = document.getElementById("recognitionLog");
 
 let streamStarted = false;
 let streamInterval;
 
-const [play, pause, screenshot] = buttons;
+const [play, pause] = buttons;
 
 const constraints = {
   video: {
@@ -78,8 +77,6 @@ const capturePicture = () => {
 
 const performRecognition = async () => {
   await recognize(capturePicture());
-  // screenshotImage.src = capturePicture();
-  // screenshotImage.classList.remove("d-none");
 };
 
 const recognize = async (imageData) => {
@@ -100,20 +97,18 @@ const recognize = async (imageData) => {
 };
 
 pause.onclick = pauseStream;
-// screenshot.onclick = doScreenshot;
 
 const startStream = async (constraints) => {
   streamStarted = true;
   const stream = await navigator.mediaDevices.getUserMedia(constraints);
   handleStream(stream);
-  streamInterval = setInterval(performRecognition, 3000);
+  streamInterval = setInterval(await performRecognition, 4000);
 };
 
 const handleStream = (stream) => {
   video.srcObject = stream;
   play.classList.add("d-none");
   pause.classList.remove("d-none");
-  screenshot.classList.remove("d-none");
 };
 
 const getCameraSelection = async () => {
@@ -131,4 +126,3 @@ const getCameraSelection = async () => {
 };
 
 getCameraSelection();
-// if (streamStarted) setInterval(performRecognition, 4000);

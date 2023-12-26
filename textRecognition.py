@@ -16,7 +16,7 @@ def preprocess_image(image):
         # Resize the image (optional, adjust the dimensions as needed)
         # This step can help reduce OCR processing time
         resized_image = cv2.resize(
-            image, None, fx=3, fy=3, interpolation=cv2.INTER_CUBIC
+            image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC
         )
 
         # Convert the image to grayscale
@@ -61,5 +61,5 @@ def tesseract(imageData):
         print(text[:-1])
         return text
     else:
-        print("no text matched")
+        print("no image")
         return ""
