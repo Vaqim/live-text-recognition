@@ -13,21 +13,16 @@ from base64 import b64decode
 
 def preprocess_image(image):
     try:
-        # Resize the image (optional, adjust the dimensions as needed)
-        # This step can help reduce OCR processing time
         resized_image = cv2.resize(
             image, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC
         )
 
-        # Convert the image to grayscale
         gray_image = cv2.cvtColor(resized_image, cv2.COLOR_BGR2GRAY)
 
-        # Apply thresholding to make text stand out from the background
         _, thresholded_image = cv2.threshold(
             gray_image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU
         )
 
-        # Perform noise reduction and smoothing (optional, adjust parameters)
         denoised_image = cv2.fastNlMeansDenoising(
             thresholded_image, h=10, templateWindowSize=7, searchWindowSize=21
         )
@@ -39,7 +34,6 @@ def preprocess_image(image):
 
 
 def deskew_process(image):
-    grayscale = rgb2gray(image)
     angle = determine_skew(image)
     rotated = rotate(image, angle, resize=True) * 255
 

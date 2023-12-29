@@ -34,4 +34,4 @@ def recognize_text():
     return jsonify({"message": tesseract(content)})
 
 
-app.run("0.0.0.0", debug=True, port=3000)
+app.run("localhost", debug=True, port=3000)
